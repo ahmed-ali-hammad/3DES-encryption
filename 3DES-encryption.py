@@ -3,14 +3,20 @@ from Cryptodome.Random import get_random_bytes
 
 path = input('Enter the file path: \n\n')
 
-def decrypt(nonce, ciphertext):
-    cipher = DES3.new(key, DES3.MODE_EAX, nonce=nonce)
-    plaintext = cipher.decrypt(ciphertext)
-    return plaintext.decode('ascii')
-
+# generating the encryption key
 key = DES3.adjust_key_parity(get_random_bytes(24))
+cipher = DES3.new(key, DES3.MODE_EAX)
+nonce = cipher.nonce
 
-print(key, '\n\n\n\n')
+print('\n\n', "key is: ", key, '\n\n')
+print("Nonce is: ", nonce, "\n\n")
+
+
+with open('encryption_key.txt', 'w') as f:
+    f.write(str(key))
+
+with open('nonce.txt', 'w') as f:
+    f.write(str(nonce))
 
 
 with open(path, "r") as f:
@@ -18,13 +24,6 @@ with open(path, "r") as f:
 
     blocks = []
     encrypted_blocks = []
-    decrypted_blocks = []
-
-    cipher = DES3.new(key, DES3.MODE_EAX)
-
-    nonce = cipher.nonce
-
-    print(nonce)
 
     while True:
         blocks.append(content[0:8])
