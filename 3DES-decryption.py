@@ -1,20 +1,23 @@
 from Cryptodome.Cipher import DES3
 from Cryptodome.Random import get_random_bytes
-import itertools as IT
-
 import ast
 
-path = 'encrypted_blocks.txt'
-path_2 = 'blocks.txt'
+encrypted_blocks_path = 'encrypted_blocks.txt'
+blocks_path = 'blocks.txt'
 
-key = b'I\xa8#\xbc\x13\x8a\xc7h4\xc7;\xb3\x0b\xfeh/8\x89\x19\xe6CT\xea#'
+global key
+global nonce
 
-nonce = b'\x90\x19\xb0[GX\xf5\xe3+\x0bDK\x8c\x05\x19@'
+with open('encryption_key.txt', 'r') as f:
+    key = str(f.read())
+
+with open('nonce.txt', 'r') as f:
+    nonce = str(f.read())
 
 cipher = DES3.new(key, DES3.MODE_EAX, nonce=nonce)
 
 
-with open(path, "r") as f_1, open(path_2, 'r') as f_2:
+with open(encrypted_blocks_path, "r") as f_1, open(blocks_path, 'r') as f_2:
     encrypted_blocks = ast.literal_eval(f_1.read())
     blocks = ast.literal_eval(f_2.read())
 
