@@ -8,10 +8,6 @@ key = DES3.adjust_key_parity(get_random_bytes(24))
 cipher = DES3.new(key, DES3.MODE_EAX)
 nonce = cipher.nonce
 
-print('\n\n', "key is: ", key, '\n\n')
-print("Nonce is: ", nonce, "\n\n")
-
-
 with open('encryption_key.txt', 'w') as f:
     f.write(str(key))
 
@@ -38,3 +34,7 @@ with open('encrypted_blocks.txt', 'w') as f:
 
 with open('blocks.txt', 'w') as f:
     f.write(str(blocks))
+
+
+print('\n\n')
+print("Data has been encrypted and key generated, check encrypted_blocks.txt and encryption_key.txt files.\n\n")
